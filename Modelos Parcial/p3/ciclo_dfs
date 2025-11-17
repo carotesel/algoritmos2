@@ -1,0 +1,22 @@
+
+def encontrar_ciclo(grafo):
+    visitados = set()
+    padres = {}
+
+    for v in grafo:
+        if v not in visitados:
+            ciclo = _dfs(grafo, v, padres, visitados)
+            if ciclo is not None:
+                return ciclo
+            return None
+        
+
+def _dfs(grafo, origen, padres, visitados):
+    visitados.add(origen)
+    padres[origen] = 0
+
+    for w in grafo.adyacentes(origen):
+        if w in visitados:
+            if padres[w] != padres[origen]:
+                return reconstruir_camino(padres, origen, w)
+            
