@@ -1,51 +1,43 @@
-package proveedores
 
-func MergeProveedores(prov1, prov2 Diccionario[string, int]) Diccionario[string, int] {
-    merge := CrearHash[string, int]()
+/*(★★) Una fábrica de pastas de Lanús le pide a alumnos de Algoritmos y Estructuras de Datos 
+que le solucionen un problema: sus dos distribuidoras de materias primas le enviaron un hash cada una, 
+dónde sus claves son los nombres de los productos, y sus valores asociados, sus precios. 
 
-	it1 := prov1.Iterador()
-	it2 := prov2.Iterador()
+La fábrica de pastas le pide a los alumnos que le implementen una función que le devuelva un nuevo
+ hash con la unión de todos esos productos, y en caso de que una misma materia prima se encuentre en ambos hashes, 
+ elegir la que tenga el precio más barato. 
+ 
+ Indicar y justificar el orden del algoritmo.*/
 
-	for it1.HaySiguiente() {
-		k, v:= it1.VerActual()
+ func UnionProductos[K comparable, float](d1, d2 Diccionario[K, float]) Diccionario[K, float]{
+	res := CrearDiccionario[K, float]()
 
-		if !prov2.Pertenece(k){
-			merge.Guardar(k, v)
-		} else{
-			v2 := prov2.Obtener(k)
-			if v < v2{
-				merge.Guardar(k, v)
-			} else{
-				merge.Guardar(k, v2)
-			}
-		}
+	iter := d1.Iterador()
 
-		it1.Siguiente()
+	// ESTRATEGIA: COPIAR TODO D1 A RES E ITERAR D2, SI ESTA EN RES METO EL MENOR Y SINO METO ACTUAL DE D2
+
+	for iter.HaySiguiente(){
+		actual, valor := d1.VerActual()
+		res.Guardar(actual, valor)
+		iter.Siguiente()
 	}
 
-	for it2.HaySiguiente() {
-		k, v := it2.VerActual()
+	iter2 := d2.Iterador()
 
-		if !prov1.Pertenece(k){
-			merge.Guardar(k, v)
-		} else{
-			v1 := prov1.Obtener(k)
-			if v < v1{
-				merge.Guardar(k, v)
-			} else{
-				merge.Guardar(k, v1)
-			}
+	for iter2.HaySiguiente(){
+		actual, valor := d2.VerActual()
+
+		if res.Pertenece(actual){
+			v1 := d1.Obtener(actual)
+			valor_min := min(valor, v1)
+			res.Guardar(actual, valor_min)
 		}
-
-		it2.Siguiente()
+		res.Guardar(actual, valor)
+		iter2.Siguiente()
 	}
 
+	
+	return res
+ }
 
-	return merge
-}
-
-// Orden:
-// Pertenece(), Obtener(), Guardar() son o(1)
-// Compl: O(n + m)
-// n = cant en prov1 
-// m = cant en prov 2
+ // Total: O(n₁ + n₂)

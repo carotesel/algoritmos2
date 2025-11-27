@@ -1,27 +1,38 @@
-package iguales
+/*6.
+(★★) Asumiendo que se tiene disponible una implementación completa del TDA Hash, se desea implementar 
+una función que decida si dos Hash dados representan o no el mismo Diccionario. 
 
-func SonIguales[K comparable, V comparable](d1, d2 Diccionario[K, V]) bool {
-    if d1.Cantidad() != d2.Cantidad(){
-        return false
-    }
+Considere para la solución que es de interés la mejor eficiencia temporal posible. 
+Indique, para su solución, eficiencia en tiempo y espacio. 
+Nota: Dos tablas de hash representan el mismo diccionario si tienen la misma cantidad de elementos; 
+todas las claves del primero están en el segundo; todas las del segundo, en el primero; 
+y los datos asociados a cada una de esas claves son iguales (se pueden comparar los valores con “==”). */ 
 
-    // Si ambos vacíos, son iguales
-    if d1.Cantidad() == 0 {
-        return true
-    }
+// 2 hash iguales:
+// - misma cant de cosas
+// - claves h1 -> claves h2
+// - claves h2 -> claves h1
+// - valores 1 == valores 2
 
-    it_d1 := d1.Iterador()
+// con verificar de 1 lado alcanza! (no hay orden xd)
 
-    for it_d1.HaySiguiente(){
-        c1, v1 := it_d1.VerActual()
-        if !d2.Pertenece(c1) {
-            return false
-        } 
-        if d2.Obtener(c1) != v1 {
-            return false
-        }
-        it_d1.Siguiente()
-    }
+func SonElMismo[K comparable, V comparable](dicc1, dicc2 Diccionario[K,V]) bool{
 
-    return true
+	if dicc1.Cantidad() != dicc2.Cantidad(){
+		return false
+	}
+
+	iter1 := dicc1.Iterador()
+
+	for iter1.HaySiguiente(){
+		actual, valor := iter1.VerActual()
+
+		if !dicc2.Pertenece(actual){
+			return false
+		} else if dicc2.Obtener(actual) != valor{
+				return false
+			}
+		iter1.Siguiente()
+	}
+	return true
 }

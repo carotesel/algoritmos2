@@ -1,35 +1,41 @@
-package difsimetrica
+/*11.(★★★) 
+♠ La diferencia simétrica entre dos conjuntos A y B es un conjunto que contiene todos los elementos que 
+se encuentran en A y no en B, y viceversa.
+
+Implementar una función DiferenciaSimetricaDict[K comparable, V any](d1, d2 Diccionario[K, V]) Diccionario[K, V] 
+que devuelva un nuevo Diccionario (puede ser el hash que hayas implementado) 
+con la diferencia simétrica entre los dos recibidos por parámetro. 
+
+La diferencia tiene que ser calculada teniendo en cuenta las claves, 
+y los datos asociados a las claves deben ser los mismos que estaban en cada uno de los hashes originales.*/
 
 func DiferenciaSimetricaDict[K comparable, V any](d1, d2 Diccionario[K, V]) Diccionario[K, V] {
-    diferencia := CrearHash[K, V]()
+	dicc := CrearDiccionario[K, V]()
 
-	it1 := d1.Iterador()
-	it2 := d2.Iterador()
+	iter := d1.Iterador()
 
-	for it1.HaySiguiente() {
-		k_Actual_1, v_Actual_1 := it1.VerActual()
+	for iter.HaySiguiente(){ // O(n1)
+		actual, valor := iter.VerActual()
 
-		if !d2.Pertenece(k_Actual_1){
-			diferencia.Guardar(k_Actual_1, v_Actual_1)
+		if !d2.Pertenece(actual){
+			dicc.Guardar(actual, valor)
 		}
-
-		it1.Siguiente()
+		iter.Siguiente()
 	}
 
-	for it2.HaySiguiente() {
-		k_Actual_2, v_Actual_2 := it2.VerActual()
+	iter2 := d2.Iterador()
 
-		if !d1.Pertenece(k_Actual_2){
-			diferencia.Guardar(k_Actual_2, v_Actual_2)
+
+	for iter2.HaySiguiente(){ // O(n2)
+		actual, valor := iter2.VerActual()
+
+		if !d1.Pertenece(actual){
+			dicc.Guardar(actual, valor)
 		}
-
-		it2.Siguiente()
+		iter2.Siguiente()
 	}
 
-	return diferencia
+	return dicc
 }
 
-// Pertenece() y Guardar() son o(1)
-// complejidad: O(n+m)
-// n = cant en d1
-// m = cant en d2
+// Complejidad: O(n1 + n2) = O(n)
