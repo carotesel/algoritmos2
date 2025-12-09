@@ -159,3 +159,5 @@ func (nodo *nodoABB[K, V]) clavesRango(M, nivelActual int, ini, fin K, lista Lis
   nodo.izq.clavesRango(M, nivelActual+1, ini, fin, lista, cmp)
   nodo.der.clavesRango(M, nivelActual+1, ini, fin, lista, cmp)
 }
+
+// O
