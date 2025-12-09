@@ -99,9 +99,7 @@ Ejemplo de árbol que **no** es suma:
 */
 
 
-// Como se puede apreciar la complejidad maxima en el algoritmos desarrollado es
-// O(n.log k), dado que a lo sumo se recorren los n elementos del arreglo, aplicando
-// a lo sumo operaciones O(log k), al Encolar o Desencolar en el heap
+
 
 /*
 2) Implementar una función que reciba un hash (diccionario) de claves genéricas K
@@ -124,10 +122,6 @@ Ejemplo de árbol que **no** es suma:
    Indicar y justificar la complejidad del algoritmo implementado.
 */
 
-
-// Como se puede apreciar la complejidad maxima en el algoritmos desarrollado es
-// O(n.m), dado que a lo sumo se recorren los n elementos del arreglo, aplicando
-// a lo sumo operaciones O(m), si se recorre toda una lista interna.
 
 /*
 3) Implementar una primitiva del ABB que, dado un valor entero M, una clave inicial "inicio"
@@ -153,26 +147,7 @@ Ejemplo de árbol que **no** es suma:
 */
 
 
-// Como se puede apreciar la complejidad maxima en el algoritmos desarrollado es
-// O(n), dado que a lo sumo se recorren los nodos del arbol, aplicando
-// a lo sumo operaciones O(1).
 
-/*
-Implementar una primitiva para el ABB:
 
-   func (arbol *Arbol[K, V]) AncestroComun(clave1, clave2 K) K
-
-   que reciba dos claves y devuelva la **clave del último ancestro en común** (Lowest Common Ancestor, LCA)
-   entre ambas en el ABB. El ancestro común puede coincidir con alguna de las claves pasadas.
-   Si **alguna** de las claves no se encuentra en el árbol, finalizar con **panic**.
-
-   Ejemplos (para el árbol del enunciado):
-     arbol.AncestroComun(1, 4) --> 2
-     arbol.AncestroComun(2, 4) --> 2
-     arbol.AncestroComun(9, 1) --> 5
-
-   Indicar y justificar la complejidad: O(h) tiempo y O(h) espacio (por la recursión),
-   donde h es la altura del árbol.
-*/
 
 

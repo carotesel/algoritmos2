@@ -17,23 +17,23 @@ const(
 	BORRADO
 )
 
-func[K comparable, V any] (hash *hashCerrado[K, V]) Limpieza(){
-	if hash.cantidad == 0{
-		hash.borrados = 0
+func[K comparable, V any] (dicc *hashCerrado[K, V]) Limpieza(){
+	if dicc.cantidad == 0{
+		dicc.borrados = 0
 		return
 	}
 
-	tabla_vieja := hash.tabla
+	tabla_vieja := dicc.tabla
 
-	hash.tabla = CrearTabla[K,V](hash.tam)
+	dicc.tabla = CrearTabla[K,V](dicc.tam)
 
 	for _, celda := range tabla_vieja{
 		if celda.estado == OCUPADO{
-			hash.Guardar(celda.clave, celda.dato)
+			dicc.Guardar(celda.clave, celda.dato)
 		}
 	}
 
-	hash.borrados = 0
+	dicc.borrados = 0
 }
 
 // -----------------------------------------------------------------------------

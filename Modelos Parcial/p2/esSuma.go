@@ -17,7 +17,7 @@ func (ab *Arbol[int]) EsSuma() bool{
 
 func esSumaAux(ab *Arbol[int]) (bool, int) {
 	if ab == nil{
-		retuen true, 0
+		return true, 0
 	}
 
 	// HOJAS: POR DEFINICION SON SUMA
