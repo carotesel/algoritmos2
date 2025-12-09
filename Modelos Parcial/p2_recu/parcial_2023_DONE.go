@@ -15,6 +15,44 @@
    Indicar y justificar la complejidad del algoritmo implementado.
 */
 
+func cmp(a, b int) int{
+	return a - b
+}
+
+func SumasMaximasDeKElementos(arr []int, k int) []int {
+
+	heapMin := CrearHeap(cmp)
+	res := make([]int, 0)
+	suma := 0
+
+	for i, elem := range arr{
+		
+		if i < k{
+			heapMin.Encolar(elem)
+			suma += elem
+
+			if i < k - 1{
+				res = append(res, -1)
+			} else{
+				res = append(res, suma)
+			}
+		}
+
+		if i >= k-1{
+			min := heapMin.VerMin()
+
+			if elem > min{
+				eliminado := heapMin.Desencolar()
+				suma -= eliminado
+				heapMin.Encolar(elem)
+				suma += elem
+			}
+
+			res = append(res, suma)
+		}
+	}
+	return res
+}
 
 
 /*
@@ -38,7 +76,33 @@
    Indicar y justificar la complejidad del algoritmo implementado.
 */
 
+func DictMedio[K comparable, T any](dict Diccionario[K, Lista[T]]) Diccionario[K, T]{
+  dicc := CrearDiccionario[K, T]()
 
+  iter := dict.Iterador()
+
+  for iter.HaySiguiente(){ // O(n)
+    clave, lista := iter.VerActual()
+
+    medio := lista.Largo() / 2
+
+    iterLista := lista.Iterador()
+
+    for i := 0; i < medio; i++ {
+      iterLista.Siguiente()
+    }
+
+    elemMedio := iterLista.VerActual()
+    dicc.Guardar(clave, elemMedio)
+
+    iter.Siguiente()
+  }
+
+  return dicc
+}
+
+// complejidad: O(M * n) porque Pertenece, Obtener, medio y Guardar son O(1) pero recorro los M elementos de la lista hasta 
+// hallar el del medio xd.
 
 /*
 3) Implementar una primitiva del ABB que, dado un valor entero M, una clave inicial "inicio"
@@ -62,3 +126,36 @@
 
    Se debe indicar y justificar la complejidad temporal del algoritmo implementado.
 */
+
+func (arbol *abb[K, V]) ClavesEnRango(M int, ini, fin K) Lista[V]{
+  lista := CrearListaEnlazada[V]()
+
+  arbol.raiz.clavesRango(M, 1, ini, fin, lista, arbol.cmp)
+
+  return lista
+}
+
+func (nodo *nodoABB[K, V]) clavesRango(M, nivelActual int, ini, fin K, lista Lista[V], cmp func (V, V) int){
+  if nodo == nil{
+    return
+  }
+
+  if nivelActual > M{
+    return
+  }
+
+  // clave < inicio -> derecha
+  if cmp(nodo.clave, ini) < 0{
+    return nodo.der.clavesRango(M, nivelActual+1, ini, fin, lista, arbol.cmp)
+
+  // clave > fin -> izq
+  } else if cmp(nodo.clave, fin) > 0{
+    return nodo.izq.clavesRango(M, nivelActual+1, ini, fin, lista, arbol.cmp) }
+
+  // nodo.clave en rango
+  lista.AgregarUltimo(nodo.dato)
+  
+  // Explorar ambos hijos, porque pueden contener claves en el rango
+  nodo.izq.clavesRango(M, nivelActual+1, ini, fin, lista, cmp)
+  nodo.der.clavesRango(M, nivelActual+1, ini, fin, lista, cmp)
+}
