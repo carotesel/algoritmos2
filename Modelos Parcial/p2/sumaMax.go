@@ -22,34 +22,32 @@ func cmp(a, b int) int{
 func SumasMaximasDeKElementos(arr []int, k int) []int {
 
 	heapMin := CrearHeap(cmp)
-	res := make([]int, 0)
+	res := make([]int, 0, len(arr))
 	suma := 0
 
 	for i, elem := range arr{
-		
+
 		if i < k{
-			heapMin.Encolar(elem)
+			heap.Encolar(elem)
 			suma += elem
 
-			if i < k - 1{
+			if i < k-1{
 				res = append(res, -1)
 			} else{
 				res = append(res, suma)
 			}
+			continue
 		}
 
-		if i >= k-1{
-			min := heapMin.VerMin()
+		min := heapMin.VerMin()
 
-			if elem > min{
-				eliminado := heapMin.Desencolar()
-				suma -= eliminado
-				heapMin.Encolar(elem)
-				suma += elem
-			}
-
-			res = append(res, suma)
+		if min < elem{
+			borrado := heapMin.Desencolar()
+			suma -= borrado
+			heapMin.Encolar(elem)
+			suma += elem
 		}
+		res = append(res, suma)
 	}
 	return res
 }

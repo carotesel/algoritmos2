@@ -88,7 +88,8 @@ cumple la propiedad de heap (de mínimos), ¿se puede hacer lo mismos?
 ahora sea de mínimos), sin modificar las funciones y primitivas previamente implementadas (simplemente contener todo el cambio
 dentro de la primitiva). Indicar y justificar la complejidad del algoritmo. Indicar qué consecuencias podría tener esta forma de
 implementación si se invoca a la primitiva Invertir una cantidad k de veces, y cómo podría resolverse si se permitiera modificar
-otras funciones y/o primitivas (y/o la estructura del heap en sí).
+otras funciones y/o primitivas (y/o la estructura del heap en sí). DONE
+
 2. Implementar la primitiva Interseccion(otro *abb[K, V]) Lista[K] para el ABB que nos devuelva una lista ordenada con la
 intersección entre el árbol y el recibido por parámetro, que estén ocupando el mismo lugar en el árbol. Indicar y justificar la
 complejidad del algoritmo implementado. En el ejemplo a continuación, la intersección sería [4, 10, 18, 20].
@@ -100,16 +101,18 @@ complejidad del algoritmo implementado. En el ejemplo a continuación, la inters
 1. Implementar un algoritmo que reciba un arreglo de n números, y un número k, y devuelva los k números dentro del
 arreglo cuya suma sería la máxima (entre todos los posibles subconjuntos de k elementos de dicho arreglo). Indicar y
 justificar la complejidad de la función implementada.
+DONE
 
 ### 11/08/25
 
 1. Explicar detalladamente cómo modificarías la implementación del ABB para poder tener una primitiva Maximo y Minimo que nos
 devuelva las claves máximas y mínimas, y que se realice en tiempo constante.
+
 2. Implementar una primitiva para el hash cerrado filtro(func(V) bool) que elimine del hash todas las claves del mismo que
 tengan asociado un valor para el cuál la función devuelva false. Indicar y justificar la complejidad de la primitiva implementada.
 Ejemplo: si mi diccionario es de cadenas a números como el de arriba, e invocamos a la primitiva con una función que devuelve true
 para los números pares y false para los impares, el diccionario debe quedar como el de abajo:
-{"koala": 3, "rana": 2, "gato": 2, "perro": 5, "canguro": 4 }
+{"koala": 3, "rana": 2, "gato": 2, "perro": 5, "canguro": 4 }. DONE
 
 ↓
 
