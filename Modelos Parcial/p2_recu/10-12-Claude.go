@@ -297,3 +297,128 @@ func (nodo *nodoABB[K, V]) interseccion(otro *nodoABB[K, V], lista Lista[K]){
 
 	nodo.der.interseccion(otro.der, lista)
 }
+
+/*
+1. Implementar una primitiva para el ABB Predecesor(clave K) K que reciba una clave
+(que puede estar en el árbol, o no) y devuelva la clave inmediatamente anterior a esta en el
+recorrido inorder. Si no hay ninguna anterior, finalizar con un panic. Indicar y justificar
+la complejidad de la primitiva.
+*/
+
+func (ab *abb[K,V]) Predecesor(clave K) K {
+    nodo := buscar(ab.raiz, clave)
+    if nodo == nil {
+        panic("clave no existe")
+    }
+
+    // Caso sencillo
+    if nodo.izq != nil {
+        return max(nodo.izq)
+    }
+
+    // Caso sin hijo izquierdo → buscar último menor desde raíz
+    return ultimoMenor(ab.raiz, clave)
+}
+
+func buscar(n *nodoABB[K,V], clave K) *nodoABB[K,V] {
+    if n == nil {
+        return nil
+    }
+    if clave < n.clave {
+        return buscar(n.izq, clave)
+    }
+    if clave > n.clave {
+        return buscar(n.der, clave)
+    }
+    return n
+}
+
+func max(n *nodoABB[K,V]) K {
+    for n.der != nil {
+        n = n.der
+    }
+    return n.clave
+}
+
+func ultimoMenor(n *nodoABB[K,V], clave K) K {
+    var candidato *nodoABB[K,V]
+
+    for n != nil {
+        if clave > n.clave {
+            candidato = n
+            n = n.der
+        } else {
+            n = n.izq
+        }
+    }
+
+    if candidato == nil {
+        panic("no tiene predecesor")
+    }
+    return candidato.clave
+}
+
+/*
+1. Implementar en Go una primitiva que reciba un árbol binario que representa un heap (árbol binario izquierdista, que
+cumple la propiedad de heap), y devuelva la representación en arreglo del heap. La firma de la primitiva debe ser
+RepresentacionArreglo() []T. Indicar y justificar la complejidad de la primitiva. La estructura del árbol binario es:
+
+type ab[T any] struct {
+izquierda *ab[T]
+derecha *ab[T]
+dato T
+}
+*/
+
+func (ab *ab[T]) RepresentacionArreglo() []T{
+
+	if ab == nil{
+		return nil
+	}
+
+	res := make([]T, 0)
+	res = append(res, ab.dato)
+
+	res = append(res, ab.izq.RepresentacionArreglo())
+	res = append(res, ab.der.RepresentacionArreglo())
+	return res
+}
+
+// O(n)
+
+/*1. Implementar en Go una primitiva para un árbol binario izquierdista, que reciba la cantidad de nodos que tiene, y
+devuelva el dato del elemento más a abajo y a la derecha del árbol. En los árboles de las figuras mostradas, se debe
+devolver en ambos casos 4. Para que el ejercicio se pueda considerar como aprobable, debe resolverse en no más que
+O(n), sin contar con otros errores. Para que se considere completamente bien, debe ejecutar en O(log n). Justificar la
+complejidad del algoritmo implementado. A fines del ejercicio, considerar que la estructura del árbol binario es:
+
+type ab[T any] struct {
+izquierda *ab[T]
+derecha *ab[T]
+dato T
+}*/
+
+// es un bfs porque es x nivel xd
+func (ab *ab[T]) MasAbajoDer(nodos int) T{
+	if ab == nil{
+		return
+	}
+
+	actual := ab
+	cola := CrearColaEnlazada[T]()
+	cola.Encolar(actual)
+
+	for !cola.EstaVacia(){
+		actual = cola.Desencolar()
+		if actual.izq != nil{
+			cola.Encolar(actual.izq)
+		}
+		if actual.der != nil{
+			cola.Encolar(actual.der)
+		}
+	}
+
+	return actual.dato
+}
+
+
