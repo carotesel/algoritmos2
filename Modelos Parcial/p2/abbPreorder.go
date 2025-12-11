@@ -28,12 +28,24 @@ func (nodo *NodoABB[K, V]) clavesPreorder(lista Lista[K]) {
 insertáramos las claves en un ABB vacío, dicho ABB tendría la misma estructura que el árbol original, pero solamente 
 queremos las claves que estén en el sub-árbol de un elemento E.*/
 
-func (arbol *ABB[K, V]) buscarNodo(clave K) *NodoABB[K, V] {
-    actual := arbol.raiz 
-
-	for actual != nil{
-		
+func buscar(nodo *NodoABB[K, V], clave K) *NodoABB[K, V] {
+	if nodo == nil{
+		return nil
 	}
+	if nodo.clave > clave{
+		return buscar(nodo.izq, clave)
+	}
+
+	if nodo.clave < clave{
+		return buscar(nodo.der, clave)
+	}
+
+	return nodo
+}
+
+func (arbol *ABB[K, V]) buscarNodo(clave K) *NodoABB[K, V] {
+    nodo := buscar(arbol.raiz, clave)
+	return nodo
 }
 
 func (abb *ABB[K, V]) ClavesSubarbol(elem K) Lista[K] {
