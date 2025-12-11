@@ -63,3 +63,46 @@ func ultimoMenor(nodo *nodoABB[K, V], clave K) K{
     return candidato.clave
 }
 
+/*-------------------*/
+
+
+func (ab *Abb[K, V]) Sucesor(clave K) K{
+	// busco nodo
+	nodo := buscar(ab.raiz, clave)
+
+	// nodo vacio: no existe clave
+	if nodo == nil{
+		panic("Clave no existe")
+	}
+
+	if nodo.der != nil{
+		return maxIzqDer(nodo.der)
+	}
+
+	return primerMayor(ab.raiz, clave)
+}
+
+func maxIzqDer(nodo *nodoABB[K, V]) K{
+	for nodo.izq != nil{
+		nodo = nodo.izq
+	}
+	return nodo.clave
+}
+
+func primerMayor(nodo *nodoABB[K, V], clave K) K{
+	var candidato *nodoABB[K, V]
+
+	for nodo != nil{
+		if nodo.clave > clave{
+			candidato = nodo
+			nodo = nodo.izq
+		} else{
+			nodo = nodo.der
+		}
+	}
+	
+	if candidato == nil{
+		panic("no tiene predecesor")
+    }
+    return candidato.clave
+}
