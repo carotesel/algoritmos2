@@ -48,26 +48,6 @@ true para los números pares y false para los impares, el diccionario debe queda
 {"rana": 2, "gato": 2, "canguro": 4}
 */
 
-const(
-	VACIO estado = iota
-	OCUPADO
-	BORRADO
-)
-
-func (dicc *hashCerrado[K, V]) Filtro(f func(V) bool){
-	tabla := dicc.tabla
-	nuevaTabla := make([]CeldaHash[K, /*
-2. Implementar una primitiva para el hash cerrado filtro(func(V) bool) que elimine del hash todas las claves del mismo que
-tengan asociado un valor para el cuál la función devuelva false. 
-Indicar y justificar la complejidad de la primitiva implementada.
-
-Ejemplo: si mi diccionario es de cadenas a números como el de arriba, e invocamos a la primitiva con una función que devuelve 
-true para los números pares y false para los impares, el diccionario debe quedar como el de abajo:
-{"koala": 3, "rana": 2, "gato": 2, "perro": 5, "canguro": 4 }
-↓
-{"rana": 2, "gato": 2, "canguro": 4}
-*/
-
 func (dicc *hashCerrado[K, V]) Filtro(f func(V) bool){
 	tabla := dicc.tabla
 	nuevaTabla := make([]CeldaHash[K, V], hash.tam)
