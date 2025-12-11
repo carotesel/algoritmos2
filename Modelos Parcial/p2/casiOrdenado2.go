@@ -13,7 +13,7 @@ El que debería ir en la posición i está entre i y (i+k)
 */
 
 func cmp (a, b int) int{
-	return b - a
+	return a - b
 }
 
 func arrCasiOrdenado(arr[]int, k int) []int{
