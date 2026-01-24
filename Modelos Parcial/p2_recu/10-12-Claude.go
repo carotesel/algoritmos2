@@ -348,7 +348,7 @@ izquierda *ab[T]
 derecha *ab[T]
 dato T
 }
-*/
+*/ //ESTA MAL
 
 func (ab *ab[T]) RepresentacionArreglo() []T{
 

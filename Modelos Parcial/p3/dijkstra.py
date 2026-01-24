@@ -4,14 +4,17 @@ def dijkstra(grafo, origen, fin):
     distancias = {}
 
     for v in grafo:
-        grafo[v] = float("inf")
+        distancias[v] = float("inf")
     
     distancias[origen] = 0
     heap_min = Heap()
     heap_min.Encolar((0, origen))
 
     while not heap_min.EstaVacia():
-        _, v = heap_min.Desenacolar()
+        dist_v, v = heap_min.Desenacolar()
+
+        if dist_v > distancias[v]:
+            continue
 
         if v == fin:
             return padres
@@ -24,6 +27,15 @@ def dijkstra(grafo, origen, fin):
                 distancias[w] = dist_w
                 heap_min.Encolar((dist_w, w))
     return padres
+
+def reconstruir_camino(padres, fin):
+    camino = []
+
+    while fin is not None:
+        camino.append(fin)
+        fin = padres[fin]
+    
+    return camino[::-1]
 
 
 
