@@ -131,6 +131,50 @@ func buscarU(arr []int, nro int, n int) int{
 // BUSCAR PRIMERO: INDICE + CHICO DONDE APARECE. SI LO ENCUENTRO SIGO REVISANDO A LA IZQ
 // BUSCAR ULTIMO: INDICE + GRANDE DONDE APARECE. SI LO ENCUENTRO SIGO REVISANDO A LA DER
 
+func mitadVecesDYC2(arr []int) bool{
+	n := len(arr)
+
+	if n == 0{
+		return false
+	}
+
+	elemMedio := arr[n/2]
+
+	indicePrimer := buscarP2(arr, elemMedio, 0, len(arr))
+	indiceUlt := buscarU2(arr, elemMedio, 0, len(arr))
+
+
+	return indiceUlt - indicePrimer + 1 > n/2
+}
+
+func buscarP2(arr []int, nro, ini, fin int) int{
+	if ini > fin{
+		return ini
+	}
+
+	medio := (ini + fin) / 2
+
+	if arr[medio] > nro{
+		return buscarP2(arr, nro, n, ini, medio-1)
+	} else{
+		return buscarP2(arr, nro, n, medio+1, fin)
+	}
+}
+
+func buscarU2(arr []int, nro, ini, fin int) int{
+	if ini > fin{
+		return ini
+	}
+
+	medio := (ini + fin) / 2
+
+	if arr[medio] < nro{
+		return buscarP2(arr, nro, n, medio+1, fin)
+	} else{
+		return buscarP2(arr, nro, n, ini, medio-1)
+	}
+}
+
 /*
 5. Implementar una primitiva para la lista enlazada Modificar(modificador func(T) T) que modifique todos los datos
 de la lista. Cada dato deberá a pasar ser el que resulta de aplicar la función modificador al dato que se encontraba
