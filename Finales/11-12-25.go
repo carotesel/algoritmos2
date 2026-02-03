@@ -4,7 +4,7 @@ pero con un único elemento de misma prioridad (no importa cuál elemento se eli
 implementada.*/
 
 func (h heap[T]) merge(otroHeap heap[T]) ColaPrioridad[T] {
-	dicc := CrearHash[T, bool](h.cmp)
+	dicc := CrearHash[T, bool](func(a, b T) bool { return heap.cmp(a, b) == 0 })
 
 	for _, dato := range h.datos{
 		if !dicc.Pertenece(dato){

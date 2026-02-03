@@ -30,3 +30,5 @@ func sonAnagramas(s1, s2 string) bool{
 
 	return dicc.Cantidad() == 0
 }
+
+
