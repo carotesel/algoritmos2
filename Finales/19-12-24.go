@@ -119,3 +119,31 @@ func ordenarCronologico(arr []string) []string{
 
 	return res
 }
+
+/*OPC B*/
+
+func radixFechas(arr []string) []string{
+	arr = counting(arr, 6, 7, 60) // O(n + k)
+	arr = counting(arr, 3, 4, 60) // O(n + k)
+	arr = counting(arr, 0, 1, 24) // O(n + k)
+	return arr
+}
+
+func counting(arr []string, ini, fin, rango int)[]string{
+	frec := make([][]string, 0, rango)
+
+	for i:=0; i<len(arr); i++{
+		fecha := arr[i]
+		dato := strconv.atoi(fecha[ini:fin+1])
+		frec[dato] = append(frec[dato], fecha)
+	}
+
+	res := make([]string, 0, len(arr))
+
+	for j:=0; j<rango; j++{
+		res = append(res, frec[j])
+	}
+	return res
+}
+
+// O(n + 60) + O(n + 60) + O(n + 24) = O(3n + 144) = O(n)

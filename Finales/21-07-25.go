@@ -71,12 +71,12 @@ todoOkElDia es O(n)).
 */
 
 func buscarDiaFalla(diasTotales int) int{
-	return diaFalla(1, diasTotales)
+	return diaFalla(0, diasTotales)
 }
 
 func diaFalla(ini, fin int) int{
 
-	if ini == fin{
+	if ini > fin{
 		return ini
 	}
 

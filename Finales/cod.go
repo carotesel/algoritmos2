@@ -110,3 +110,34 @@ func niv (nodo *nodoABB[K, V], dicc Diccionario[int, Lista[K]]){
 		}
 	}
 }
+
+/*Definimos a la reducción de una secuencia de números como la operación de sacar los dos elementos más pequeños de la misma, volver a guardar el resultado de **2 * mínimo + segundo_mínimo**. Esto sólo puede hacerse si hay al menos dos elementos.
+
+Ejemplo:
+
+`[1, 7, 2, 3] → [7, 3, 4]`
+
+De esta forma la secuencia queda con un elemento menos.
+
+Implementar un algoritmo que reciba un arreglo y devuelva el único valor que quedaría en el arreglo si aplicamos dicha reducción hasta que quede un único elemento en el arreglo.
+
+Indicar y justificar la complejidad del algoritmo.*/
+
+func cmp(a, b int) int{
+	return a - b
+}
+
+func reducir(arr []int) int{
+	heap_min := CrearHeapArr(cmp, arr)
+
+	for heap_min.Cantidad() > 1{
+		min := heap_min.Desencolar()
+		min_2 := heap_min.Desencolar()
+		nro := (2 * min) + min_2
+		
+		heap_min.Encolar(nro)
+		pila.Apilar(nro)
+	}
+	return heap_min.Desencolar()
+}
+// O(n + n log n)

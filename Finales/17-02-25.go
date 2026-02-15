@@ -57,7 +57,7 @@ complejidad del algoritmo.
 def obtener_dirigido(grafoND):
 	visitados = set()
 	aristas_visitadas = set()
-	grafoD = Grafo(es_dirigido = true, vertices = grafoND.obtener_vertices())
+	grafoD = Grafxo(es_dirigido = true, vertices = grafoND.obtener_vertices())
 	origen = grafo.vertice_aleatorio()
 	dfs(grafoND, grafoD, origen, visitados, aristas_visitadas)
 	return grafoD

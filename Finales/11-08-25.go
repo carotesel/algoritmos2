@@ -1,3 +1,26 @@
+/*2.*/
+
+func arrOrdenado(arr []int) bool{
+	return ordenado(arr, 0, len(arr)-1)
+}
+
+func ordenado(arr []int, ini, fin int) bool{
+	if ini >= fin{
+		return true
+	}
+	medio := (ini + fin)/2
+
+	if {
+		return false
+	}
+	izq := ordenado(arr, ini, medio)
+	der := ordenado(arr, medio+1, fin)
+	frontera := arr[medio] < = arr[medio+1]
+	return izq && der && frontera
+}
+
+// o(n)
+
 /*
 3. Explicar detalladamente cómo modificarías la implementación del ABB para poder tener una primitiva Maximo y Minimo que nos
 devuelva las claves máximas y mínimas, y que se realice en tiempo constante.
