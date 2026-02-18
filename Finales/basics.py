@@ -34,21 +34,3 @@ def hay_ciclo_ND(grafo):
 Implementar un algoritmo que determine si un grafo dirigido tiene ciclos.
 Complejidad lineal."""
 
-def hay_ciclo_dir(grafo):
-    visitados = set()
-
-    for v in grafo:
-        if v in visitados:
-            continue
-        cola = Cola()
-        cola.Encolar(v)
-        visitados.add(v)
-
-        for w in grafo.adyacentes(v):
-
-            if w not in visitados:
-                visitados.add(w)
-                cola.Encolar(w)
-            else:
-                return True
-    return False

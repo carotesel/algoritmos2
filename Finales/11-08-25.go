@@ -9,10 +9,6 @@ func ordenado(arr []int, ini, fin int) bool{
 		return true
 	}
 	medio := (ini + fin)/2
-
-	if {
-		return false
-	}
 	izq := ordenado(arr, ini, medio)
 	der := ordenado(arr, medio+1, fin)
 	frontera := arr[medio] < = arr[medio+1]

@@ -51,12 +51,11 @@ func cmp(a, b int) int{
 func k_pos(arr []int, k int) []int{
 	n := len(arr)
 	res := make([]int, n, 0)
-	heap := CrearHeapArr[int](cmp, arr[:k+1])
-	actual := k+1
-
 	if k >= n{
 		k = n -1
 	}
+	heap := CrearHeapArr[int](cmp, arr[:k+1])
+	actual := k+1
 
 	for actual < n{
 		res = append(res, heap.Desencolar())
@@ -152,4 +151,203 @@ func (abb *abb[K, V]) Niveles() Diccionario[int, Lista[K]] {
 	}
 
 	return dicc
+}
+
+/*
+1. Implementar:
+
+    ClavesEnRangoHastaNivel(abb, ini, fin, M) → Lista
+    
+    que devuelva todas las claves del ABB que están en el rango `[ini, fin]` y 
+	no superen el nivel M de profundidad (raíz está en nivel 0).
+    
+    La lista debe quedar ordenada.
+    
+    Indicar complejidad según h y M.
+*/
+
+func (abb *abb[K, V]) ClavesRangoNivel(M int, ini, fin K) Lista[V]{
+	lista:= CrearListaEnlazada[V]()
+	clavesRango(abb.raiz, abb.cmp, ini, fin, nivel, 0, lista)
+	return lista
+}
+
+func clavesRango(nodo *nodoABB[K, V], cmp func(K, K) int, ini, fin K, nivel, nActual int, lista ListaEnlazada[V]){
+	if nodo == nil{
+		return 
+	}
+
+	if nActual > nivel{
+		return
+	}
+
+	// si nodo < ini -> der (no arranca aun)
+	if cmp(nodo.clave, iniciativa) < 0{
+		return clavesRango(nodo.der, cmp, ini, fin, nivel, nActual + 1, lista)
+	}
+
+	// si nodo > fin -> izq (me pase)
+	if cmp(nodo.clave, fin) > 0{
+		return clavesRango(nodo.izq, cmp, ini, fin, nivel, nActual + 1, lista)
+	}
+
+	lista.AgregarUltimo(nodo.clave)
+
+	clavesRango(nodo.der, cmp, ini, fin, nivel, nActual + 1, lista)
+	clavesRango(nodo.izq, cmp, ini, fin, nivel, nActual + 1, lista)
+}
+
+/*
+1. Se tiene una cadena que contiene () y ningún otro caracter (considerar que un único caracter es de tipo rune). Un
+ejercicio típico es dada una cadena averiguar si está balanceada (es decir, todos los símbolos de apertura se cierran, y
+además respetan el orden en el que se abrieron. Ejemplos balanceados: "()()()", o "(())()". No balanceados: "(()",
+o ")(".
+Teniendo en cuenta esto, se tiene una cadena que se asegura que en caso de borrar algunos paréntesis la cadena será
+balanceada, se pide implementar una función func cantBorradosBalanceada(cadena string) int que dada una
+cadena de este tipo, devuelva la cantidad mínima de paréntesis que se deben borrar para que la cadena esté balanceada.
+Indicar y justificar la complejidad del algoritmo.
+Ejemplos:
+cadena: '()' -> 0
+cadena: ')(' -> 2
+cadena: '(()' -> 1
+cadena: ')(()' -> 2
+*/
+
+func cantBorradosBalanceada(cadena string) int{
+	p := CrearPilaDinamica[string]()
+	cantBorrar := 0
+
+	for _, c := range cadena{
+		if c == '('{
+			p.Apilar(c)
+		} else{
+			if p.EstaVacia(){
+				cantBorrar++
+			} else{
+				p.Desapilar()
+			}
+		}
+	}
+
+	for !p.EstaVacia(){
+		cantBorrar++
+		p.Desapilar()
+	}
+
+	return cantBorrar
+}
+
+// complejidad: o(n)
+
+/*
+// 1.er parcialito – 26/09/2022
+
+// 1. Implementar una funcion `balancedado(texto string) bool`
+//    que retorne si `texto` esta balanceado o no.
+//    `texto` solo puede contener los siguientes caracteres:
+//    { }, [ ], ( ), < >.
+//
+//    Indicar y justificar la complejidad de la funcion implementada.
+//
+//    Un texto esta balanceado si cada agrupador abre y cierra en un
+//    orden correcto. Por ejemplo:
+//
+//    balancedado("{{{[()]}}}") => true
+//    balancedado("{[}")        => false
+//    balancedado("{()}]")      => false
+//    balancedado("{[()()]}")   => true
+//    balancedado("(){}([])")   => true
+*/
+
+func balancedado(texto string) bool{
+	p := CrearPilaDinamica[string]()
+
+	for _, c := range cadena{
+		if c == '('|| c == '[' || c == '{' || c == '<'{
+			p.Apilar(c)
+		} else{
+
+			if p.EstaVacia() {
+                return false  // Cierre sin apertura
+            }
+
+			elem := p.Desapilar()
+
+			if c == ')' && elem != '('{
+				return false
+			} else if c == '}' && elem != '{'{
+				return false
+			} else if c == ']' && elem != '['{
+				return false
+			} else if c == '>' && elem != '<'{
+				return false
+			}
+		}
+	}
+	return p.EstaVacia() // la pila debe quedar vacia!
+}
+
+/*1. Implementar una función suma_total(arreglo []float) float que, por división y conquista, devuelva la suma
+de todos los elementos. Indicar y justificar adecuadamente la complejidad de la función implementada.*/
+
+func suma_total(arreglo []float) float{
+	return suma(arreglo, 0, len(arr)-1)
+}
+
+func suma(arr []float, ini, fin int) float{
+	if ini > fin{
+		return 0 // arr vacio
+	}
+
+	if ini == fin{
+		return arr[ini] // arr con 1 elemento
+	}
+
+	medio := (ini + fin)/2
+
+	izq := suma(arr, ini, medio)
+	der := suma(arr, medio+1, fin)
+
+	return izq + der
+}
+
+// O(n)
+
+
+
+/*2. Implementar una función que reciba un arreglo A de n enteros y un número k y devuelva un nuevo arreglo en el que
+para cada posición i de dicho arreglo, contenga el resultado de la multiplicación de los primeros k máximos del arreglo A
+entre las posición [0;i] (incluyendo a i). Las primeras k − 1 posiciones del arreglo a devolver deben tener como valor -1.
+Por ejemplo, para el arreglo [1, 5, 3, 4, 2, 8] y k = 3, el resultado debe ser [-1, -1, 15, 60, 60, 160]. Indicar
+y justificar la complejidad del algoritmo implementado.
+*/
+
+func multiplicar(a []int, k int) []int{
+	n := len(a)
+	res := make([]int, n)
+	heap_min := CrearHeap[int](cmp)
+	acumulado := 1
+
+	for i:=0; i<n; i++{
+
+		x := a[i]
+
+		if heap_min.Largo() < k{ // menos de k elementos -> encolo y multiplico de una
+			heap_min.Encolar(x)
+			acumulado = acumulado * x
+		
+		} else if x > heap_min.VerMin(){ // mas de k elementos y nuevo elem es mayor que el minimo -> desencolo y divido asi lo desacumulo pero desp encolo el nuevo porque es medio un heap de max en realidad
+			sacado := heap_min.Desencolar()
+			acumulado = acumulado / sacado
+			heap_min.Encolar(x)
+			acumulado = acumulado * x
+		}
+
+		if i < k{
+			res[i] = -1
+		} else{
+			res[i] = acumulado
+		}
+	}
+	return res
 }

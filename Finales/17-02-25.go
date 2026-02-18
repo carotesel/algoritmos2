@@ -78,3 +78,5 @@ def dfs(grafoND, grafoD, origen, visitados, aristas_visitadas):
 		else:
 			 grafoD.agregarArista(origen, w)
 
+
+
