@@ -223,7 +223,7 @@ func (dicc *hashCerrado[K, V]) eliminarColisiones(clave K) []K{
 
 func (ab *abb[K, V]) ClavesRangoNivel(M int, ini, fin K) Lista[V]{
 	lista := CrearListaEnlazada[V]()
-	ab.raiz.clavesRangoN(M, 1, ini, fin, lista, ab.cmp)
+	ab.raiz.clavesN(M, 1, ini, fin, lista, ab.cmp)
 	return lista
 }
 

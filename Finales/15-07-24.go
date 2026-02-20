@@ -138,6 +138,11 @@ mismo estado. Indicar y justificar la complejidad de la primitiva implementada.
 */
 
 func (lista *listaEnlanzada[T]) Reducir(reductor func(T,T) T, valorInicial T) T{
+
+	if lista.largo == 0{
+		return valorInicial
+	}
+
 	valor := valorInicial
 
 	actual := lista.primero

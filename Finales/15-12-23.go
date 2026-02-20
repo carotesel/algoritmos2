@@ -126,3 +126,40 @@ func palabraFrecuente(texto string) string{
 // k = cantidad de palabras 
 // m = cantidad de letras TOTALES
 // k <= m (considerablemente mas chico)
+
+/*5. Implementar un algoritmo que reciba un grafo dirigido, acíclico y pesado, un vértice v y otro w, y devuelva la longitud
+del camino máximo. Indicar y justificar la complejidad del algoritmo implementado.*/
+
+def camino_max(grafo, origen, fin):
+	camino = []
+	visitados = set()
+	dfs(grafo, camino, visitados, origen)
+	camino.reverse()
+
+	dist = {}
+
+	for v in grafo:
+		dist[v] = float("inf")
+	
+	dist[origen] = 0
+	padres = {origen: None}
+
+	for v in camino:
+		for w in grafo.adyacentes(v):
+			peso = grafo.peso(v, w)
+
+			if dist[v] + peso > dist[w]:
+				padres[w] = v 
+				dist[w] = dist[v] + peso
+	
+	return padres, distancias 
+
+def dfs(grafo, camino, visitados, origen):
+	visitados.add(origen)
+	camino.append(origen)
+
+	for w in grafo.adyacentes(origen):
+		if w not in visitados:
+			dfs(grafo, camino, visitados, w)
+
+

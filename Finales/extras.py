@@ -134,3 +134,131 @@ def dfs(grafo, g_dir, aristas_vis, visitados, origen):
 
 
 
+# contar aristas g no dir
+
+def contar_aristas(grafo):
+
+    aristas = []
+    aristas_visit = set()
+
+    for v in grafo:
+        for w in grafo.adyacentes(v):
+            if (v, w) not in aristas_visit and (w, v) not in aristas_visit:
+                aristas.append((v, w))
+                aristas_visit.add((v, w))
+                aristas_visit.add((w, v))
+    return len(aristas)
+
+def es_arbol(grafo):
+
+    vert = grafo.obtener_vertices()
+
+    if len(vert) == 0: 
+        return True
+    
+    aristas = contar_aristas(grafo)
+
+    if aristas != len(vert) - 1:
+        return False
+    
+    visitados = set()
+    origen = vert[0]
+
+    dfs(grafo, origen, visitados)
+
+    if len(visitados) != len(vert):
+        return False
+    return True
+
+def dfs(grafo, origen, visitados):
+
+    visitados.add(origen)
+
+    for w in grafo.adyacentes(origen):
+        if w not in visitados:
+            dfs(grafo, w, visitados)
+
+"""Ejercicio 51: Camino entre dos vértices (mejor con DFS)
+Implementá una función que determine si existe algún camino entre dos vértices v y w. Complejidad: O(V+E)."""
+
+def hay_camino(grafo, v, w):
+    visitados = set()
+    lo_hay = dfs(grafo, v, w, visitados)
+    return lo_hay
+
+def dfs(grafo, v, w, visitados):
+
+    visitados.add(v)
+
+    for x in grafo.adyacentes(v):
+        if x == w:
+            return True
+        
+        if x not in visitados:
+            if dfs(grafo, x, w, visitados):
+                return True
+    return False
+
+"""Ejercicio 52: Todos los caminos de v a w.
+Implementá un algoritmo que encuentre todos los caminos simples (sin repetir vértices) de v a w. 
+Complejidad: O(V! ) en el peor caso. Justificá."""
+
+def todos_caminos(grafo, ini, fin):
+    caminos = []
+    camino = []
+    visitados = set()
+    dfs(grafo, ini, fin, visitados, camino, caminos)
+    return caminos
+
+def dfs(grafo, v, fin, visitados, camino, caminos):
+
+    visitados.add(v)
+    camino.append(v)
+
+    for x in grafo.adyacentes(v):
+        if x == fin:
+            caminos.append(camino.copy())
+        else:
+           # sigo recorriendoooo el dfs
+           for w in grafo.adyacentes(v):
+            if w not in visitados:
+                dfs(grafo, w, fin, visitados, camino, caminos)
+
+    # BACKTRACKING -> sigo recorriendo y por eso saco el ultimo
+    camino.pop()
+    visitados.remove(v)
+
+# Componentes conexas de grafo no dirigido (devolver cada componente no solo la cantidad)
+
+def componentes(grafo):
+
+    componentes = []
+    visitados = set()
+    
+    for v in grafo:
+        if v not in visitados:
+            componente = []
+            bfs(grafo, v, componente, visitados)
+            componentes.append(componente)
+        return componentes 
+    
+def  bfs(grafo, v, componente, visitados):
+
+    cola = Cola()
+    cola.Encolar(v)
+
+    while cola:
+        x = cola.Desencolar()
+        componente.append(x)
+
+        for w in grafo.adyacentes(x):
+            if w not in visitados:
+                visitados.add(w)
+                cola.Encolar(w)
+
+
+
+
+
+
+    

@@ -24,7 +24,7 @@ func faltante(arr1, arr2 []int, ini, fin int) int{
 }
 
 /*
-2. Implementar un algoritmo que dado un grafo dirigido y acíclico, obtenga el camino mínimo de un vértice v a otro w,
+2. Implementar un algoritmo que dado un grafo dirigido y clico, obtenga el camino mínimo de un vértice v a otro w,
 en tiempo lineal (de vértices y aristas). Justificar la complejidad del algoritmo implementado. Pista: utilizar un
 recorrido DFS.
 */

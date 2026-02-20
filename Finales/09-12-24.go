@@ -30,34 +30,42 @@ a habilitarse en otro tiempo posterior (considerar siempre tiempos discretos). I
 implementado. Para esto, suponer que los los valores de los pesos son pequeños. . . si no lo fueran, ¿Cuál podría ser el problema?
 */
 
-def dijkstra(grafo, origen):
-	padres = {origen: None}
-	distancias = {}
+ddef dijkstra(grafo, origen):
 
-	for v in grafo:
-		distancias[v] = float("inf")
-	
-	distancias[origen] = 0
-	heap_min = Heap()
-	heap_min.Encolar((0, origen))
+    padres = {origen: None}
+    distancias = {}
 
-	while not heap_min.EstaVacia():
-		dist_v, v = heap_min.Desencolar()
+    for v in grafo:
+        distancias[v] = float("inf")
+    
+    distancias[origen] = 0
+    heap_min = Heap()
+    heap_min.Encolar((0, origen))
 
-		if dist_v > distancias[v]:
-			continue
-		
-		for w in grafo.adyacentes(v):
-			// tiempo = dist_v
-			if estaHabilitada(v, w, dist_v):
-				peso = grafo.peso_arista(v, w) + dist_v
+    while not heap_min.EstaVacia():
+        dist_v, v = heap_min.Desencolar()
 
-				if peso < distancias[w]:
-					distancias[w] = peso
-					padres[w] = v 
-					heap_min.Encolar((peso, w))
-	
-	return distancias, padres
+        if dist_v > distancias[v]:
+            continue
+        
+        for w in grafo.adyacentes(v):
+
+            tiempo_actual = dist_v
+
+            //buscar primer tiempo habilitado >= tiempo_actual
+            tiempo_salida = tiempo_actual
+            while not estaHabilitada(v, w, tiempo_salida):
+                tiempo_salida += 1   # esperamos
+
+            nuevo_tiempo = tiempo_salida + grafo.peso_arista(v, w)
+
+            if nuevo_tiempo < distancias[w]:
+                distancias[w] = nuevo_tiempo
+                padres[w] = v
+                heap_min.Encolar((nuevo_tiempo, w))
+    
+    return distancias, padres
+
 
 	/*
 	4. Implementar una función que reciba un arreglo de números y determine cuáles aparecen una única vez. Indicar y justificar la
